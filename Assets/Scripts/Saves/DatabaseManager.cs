@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
@@ -17,7 +18,12 @@ public class DatabaseManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            _dbPath = "URI=file:" + Application.persistentDataPath + "/game.db";
+            var file = Path.Combine(Application.persistentDataPath, "game.db");
+            if (!File.Exists(file))
+            {
+                File.Create(file).Dispose();
+            }
+            _dbPath = "URI=file:" + file;
             Init();
         }
         else
