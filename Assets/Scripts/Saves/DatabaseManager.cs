@@ -58,7 +58,9 @@ public class DatabaseManager : MonoBehaviour
                     command.Parameters.Add(new SqliteParameter("@u", username));
                     command.Parameters.Add(new SqliteParameter("@p", password));
                     command.ExecuteNonQuery();
-                    long id = connection.LastInsertRowId;
+                    command.CommandText = "SELECT last_insert_rowid();";
+                    command.Parameters.Clear();
+                    long id = (long)command.ExecuteScalar();
                     command.Parameters.Clear();
                     command.CommandText = "INSERT INTO Progress(user_id) VALUES(@id);";
                     command.Parameters.Add(new SqliteParameter("@id", id));
