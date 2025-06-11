@@ -1,4 +1,4 @@
-#if UNITY_WEBGL
+#if !UNITY_WEBGL
 using InstantGamesBridge.Common;
 using InstantGamesBridge.Modules.Advertisement;
 using InstantGamesBridge.Modules.Device;

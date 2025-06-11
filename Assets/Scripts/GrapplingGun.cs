@@ -95,7 +95,7 @@ public class GrapplingGun : MonoBehaviour
     #endregion
     private void SetGrapplePoint(Vector3 touchPosition)
     {
-        //проверяем, находится ли объект, за который можно зацепиться, при нажатии мыши
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         Vector2 cubeRay = _camera.ScreenToWorldPoint(touchPosition);
         RaycastHit2D cubeHit = Physics2D.Raycast(cubeRay, Vector2.zero, _grappleDistance, _grappleLayerMask);
         if (cubeHit)
@@ -122,7 +122,7 @@ public class GrapplingGun : MonoBehaviour
                 GrappleDistanceVector = GrapplePoint - (Vector2)_gunPivot.position;
             }
         }
-        //если не находим, пускаем паутину по направлению, пока она не дотянется до объекта
+        //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         else
         {
             Vector2 distanceVector = _camera.ScreenToWorldPoint(touchPosition) - _firePoint.position;
@@ -182,7 +182,7 @@ public class GrapplingGun : MonoBehaviour
                     break;
                 case LaunchType.Transform_Launch:
                     _rigidbody.gravityScale = 0;
-                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.linearVelocity = Vector2.zero;
                     break;
             }
         }

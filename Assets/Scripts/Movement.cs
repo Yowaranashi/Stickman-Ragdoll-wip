@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
             //_armRCollider.isTrigger = true;
             //_armLCollider.isTrigger = true;
             _body.AddForce(Vector2.up * _climbingSpeed);
-            _body.velocity = new Vector2(0, _body.velocity.y);
+            _body.linearVelocity = new Vector2(0, _body.linearVelocity.y);
         }
         else if (_groundChecker.Grounded)
         {
@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
     }
     private void ResetVelocity()
     {
-        _body.velocity = Vector2.zero;
+        _body.linearVelocity = Vector2.zero;
     }
     IEnumerator MoveRight(float seconds)
     {
