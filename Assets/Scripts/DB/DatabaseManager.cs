@@ -8,6 +8,7 @@ public class DatabaseManager
     private const string DatabaseName = "GameData.db";
     private const int PlayerId = 1;
 
+
     private string ConnectionString => "URI=file:" + Path.Combine(Application.persistentDataPath, DatabaseName);
 
     public DatabaseManager()
@@ -58,7 +59,6 @@ public class DatabaseManager
                     "PRIMARY KEY(player_id, skin_id)," +
                     "FOREIGN KEY(player_id) REFERENCES Players(id) ON DELETE CASCADE," +
                     "FOREIGN KEY(skin_id) REFERENCES Skins(id) ON DELETE CASCADE);";
-                command.ExecuteNonQuery();
             }
         }
     }
@@ -99,6 +99,7 @@ public class DatabaseManager
                 command.CommandText = "SELECT opened, chosen FROM PlayerSkins WHERE player_id=@player AND skin_id=@skin";
                 command.Parameters.AddWithValue("@player", PlayerId);
                 command.Parameters.AddWithValue("@skin", skinId);
+
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -112,6 +113,7 @@ public class DatabaseManager
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@player", PlayerId);
                 command.Parameters.AddWithValue("@skin", skinId);
+
                 command.Parameters.AddWithValue("@opened", defaultOpened ? 1 : 0);
                 command.Parameters.AddWithValue("@chosen", defaultChosen ? 1 : 0);
                 command.ExecuteNonQuery();
@@ -131,6 +133,7 @@ public class DatabaseManager
                 command.CommandText = "INSERT OR REPLACE INTO PlayerSkins(player_id,skin_id,opened,chosen) VALUES(@player,@skin,@opened,@chosen)";
                 command.Parameters.AddWithValue("@player", PlayerId);
                 command.Parameters.AddWithValue("@skin", skinId);
+
                 command.Parameters.AddWithValue("@opened", opened ? 1 : 0);
                 command.Parameters.AddWithValue("@chosen", chosen ? 1 : 0);
                 command.ExecuteNonQuery();
@@ -149,6 +152,7 @@ public class DatabaseManager
                 command.Parameters.AddWithValue("@money", money);
                 command.Parameters.AddWithValue("@level", level);
                 command.Parameters.AddWithValue("@player", PlayerId);
+
                 command.ExecuteNonQuery();
             }
         }

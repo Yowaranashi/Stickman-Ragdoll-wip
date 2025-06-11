@@ -27,4 +27,5 @@ CREATE TABLE IF NOT EXISTS PlayerSkins(
     PRIMARY KEY(player_id, skin_id),
     FOREIGN KEY(player_id) REFERENCES Players(id) ON DELETE CASCADE,
     FOREIGN KEY(skin_id) REFERENCES Skins(id) ON DELETE CASCADE
+
 );
