@@ -58,7 +58,6 @@ public class DatabaseManager : MonoBehaviour
                     command.Parameters.Add(new SqliteParameter("@u", username));
                     command.Parameters.Add(new SqliteParameter("@p", password));
                     command.ExecuteNonQuery();
-                    // Retrieve generated user id from last insert
                     long id = connection.LastInsertRowId;
                     command.Parameters.Clear();
                     command.CommandText = "INSERT INTO Progress(user_id) VALUES(@id);";
