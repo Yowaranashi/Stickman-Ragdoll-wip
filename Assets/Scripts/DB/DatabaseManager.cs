@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Data;
-using Mono.Data.Sqlite;
 using System.IO;
+using Mono.Data.Sqlite;
 
 public class DatabaseManager
 {
