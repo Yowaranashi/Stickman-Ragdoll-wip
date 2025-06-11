@@ -904,7 +904,6 @@ GameObject:
   - component: {fileID: 3307451631198031887}
   - component: {fileID: 3307451631198031923}
   - component: {fileID: 3307451631198031922}
-  - component: {fileID: 3307451631198031885}
   - component: {fileID: 3307451631198031884}
   m_Layer: 0
   m_Name: RewardButton
@@ -973,18 +972,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3307451631198031885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3307451631198031886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8172707037d0fd42b9bd10e6d5eead7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3307451631198031884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,16 +1016,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3307451631198031885}
-        m_TargetAssemblyTypeName: RewardAd, Assembly-CSharp
-        m_MethodName: Reward
+      - m_Target: {fileID: 3307451632197145160}
+        m_TargetAssemblyTypeName: FinishPanel, Assembly-CSharp
+        m_MethodName: GetReward
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3307451631797979330
@@ -1287,7 +1274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _database: {fileID: 11400000, guid: 110f90b602bbde148a85048d22dc6466, type: 2}
   _rewardButton: {fileID: 3307451631198031884}
-  _reward: {fileID: 3307451631198031885}
   _rewardText: {fileID: 3307451630918687582}
   _saveManager: {fileID: 0}
 --- !u!1 &3307451632263032219
