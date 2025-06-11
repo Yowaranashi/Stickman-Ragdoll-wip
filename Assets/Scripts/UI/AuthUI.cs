@@ -18,6 +18,8 @@ public class AuthUI : MonoBehaviour
 
     void Start()
     {
+        if (DatabaseManager.Instance == null)
+            new GameObject("Database").AddComponent<DatabaseManager>();
         ShowLogin();
     }
 
@@ -36,19 +38,27 @@ public class AuthUI : MonoBehaviour
     {
         string username = usernameLogin.text;
         string password = passLogin.text;
-        /*AuthManager.Instance.Login(username, password, success => {
-            if (success) SceneManager.LoadScene("MainScene");
-            else Debug.LogError("Login failed");
-        });*/
+        if (DatabaseManager.Instance.Login(username, password))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            Debug.LogError("Login failed");
+        }
     }
 
     public void OnRegisterClick()
     {
         string username = usernameReg.text;
         string password = passReg.text;
-        //AuthManager.Instance.Register(username, password, success => {
-        //    if (success) SceneManager.LoadScene("MainScene");
-        //    else Debug.LogError("Registration failed");
-        //});
+        if (DatabaseManager.Instance.Register(username, password))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            Debug.LogError("Registration failed");
+        }
     }
 }
