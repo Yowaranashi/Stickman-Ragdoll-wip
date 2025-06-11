@@ -16,68 +16,57 @@ public class SaveManager : MonoBehaviour
     {
         foreach (var item in _database.Skins)
         {
-            PlayerPrefs.DeleteKey(item.Key + OpenedState);
-            PlayerPrefs.DeleteKey(item.Key + ChosenState);
+            item.Opened = false;
+            item.Chosen = false;
         }
-        PlayerPrefs.DeleteKey("Money");
-        PlayerPrefs.DeleteKey(LevelKey);
-        PlayerPrefs.Save();
+        _database.Money = 100;
+        DatabaseManager.Instance.SaveProgress(_database.Money, 1);
+        DatabaseManager.Instance.SaveSkins(_database.Skins);
     }
 
     public void LoadData()
     {
+        var skinsData = DatabaseManager.Instance.LoadSkins();
         int openedSkins = 0;
         for (int i = 0; i < _database.Skins.Length; i++)
         {
-            var key = _database.Skins[i].Key + OpenedState;
-            bool opened = PlayerPrefs.GetInt(key, i == 0 ? 1 : 0) == 1;
-            _database.Skins[i].Opened = opened;
-            if (opened)
+            if (skinsData.TryGetValue(_database.Skins[i].Key, out var state))
+            {
+                _database.Skins[i].Opened = state.opened == 1;
+                _database.Skins[i].Chosen = state.chosen == 1;
+            }
+            if (_database.Skins[i].Opened)
                 openedSkins++;
-        }
-
-        for (int i = 0; i < _database.Skins.Length; i++)
-        {
-            var key = _database.Skins[i].Key + ChosenState;
-            bool chosen = PlayerPrefs.GetInt(key, i == 0 ? 1 : 0) == 1;
-            _database.Skins[i].Chosen = chosen;
         }
 
         if (openedSkins == 0)
             _database.Skins[0].Opened = true;
 
+        var progress = DatabaseManager.Instance.LoadProgress();
+        _database.Money = progress.money;
         SelectedSkinLoaded?.Invoke(_database.GetChosenSkin());
-
-        _database.Money = PlayerPrefs.GetInt("Money", _database.Money);
         DataLoaded?.Invoke();
     }
 
     public void SaveMoney()
     {
-        PlayerPrefs.SetInt("Money", _database.Money);
-        PlayerPrefs.Save();
+        DatabaseManager.Instance.SaveProgress(_database.Money, LoadLevel());
     }
 
     public void SaveLevel(int level)
     {
-        PlayerPrefs.SetInt(LevelKey, level);
-        PlayerPrefs.Save();
+        DatabaseManager.Instance.SaveProgress(_database.Money, level);
     }
 
     public int LoadLevel()
     {
-        int level = PlayerPrefs.GetInt(LevelKey, 1);
-        LevelLoaded?.Invoke(level);
-        return level;
+        var progress = DatabaseManager.Instance.LoadProgress();
+        LevelLoaded?.Invoke(progress.level);
+        return progress.level;
     }
 
     public void SaveSkinsState()
     {
-        for (int i = 0; i < _database.Skins.Length; i++)
-        {
-            PlayerPrefs.SetInt(_database.Skins[i].Key + OpenedState, _database.Skins[i].Opened ? 1 : 0);
-            PlayerPrefs.SetInt(_database.Skins[i].Key + ChosenState, _database.Skins[i].Chosen ? 1 : 0);
-        }
-        PlayerPrefs.Save();
+        DatabaseManager.Instance.SaveSkins(_database.Skins);
     }
 }
