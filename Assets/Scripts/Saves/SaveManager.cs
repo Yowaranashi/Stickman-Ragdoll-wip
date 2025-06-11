@@ -62,7 +62,7 @@ public class SaveManager : MonoBehaviour
     public void SaveLevel(int level)
     {
         var progress = _db.LoadProgress();
-        _db.SaveProgress(progress.money, level);
+        _db.SaveProgress(progress.money, Mathf.Max(1, level));
     }
 
     public int LoadLevel()

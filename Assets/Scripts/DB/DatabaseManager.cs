@@ -122,12 +122,12 @@ public class DatabaseManager
         }
     }
 
-    public void UpdateSkinState(string key, bool opened, bool chosen)
+                command.Parameters.AddWithValue("@level", Mathf.Max(1, level));
     {
         using (var connection = new SqliteConnection(ConnectionString))
         {
             connection.Open();
-            int skinId = GetOrCreateSkinId(connection, key);
+                        return (money, Mathf.Max(1, level));
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "INSERT OR REPLACE INTO PlayerSkins(player_id,skin_id,opened,chosen) VALUES(@player,@skin,@opened,@chosen)";
