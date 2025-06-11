@@ -10,4 +10,19 @@ This Unity project is licensed under the MIT License, read more about usability 
 
 ## Database
 
-The project now includes a small SQLite database that stores player progress and skin states. The database file is created in `Application.persistentDataPath` at runtime. The schema is available in [`Database/schema.sql`](Database/schema.sql).
+The project stores progress in a small SQLite database created in
+`Application.persistentDataPath` at runtime. The schema can be found in
+[`Database/schema.sql`](Database/schema.sql).
+
+### Schema overview
+
+- **Players** – list of players. The demo uses a single player with ID `1`.
+- **Skins** – all available skin keys.
+- **PlayerProgress** – one-to-one relation with `Players`, holding current
+  money and last unlocked level for each player.
+- **PlayerSkins** – links a player with a skin. Stores whether the skin is
+  opened and if it is currently chosen. References both `Players` and `Skins`
+  via foreign keys.
+
+These relations allow multiple players to share the same skin catalog while
+keeping individual progress separate.
