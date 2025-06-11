@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using InstantGamesBridge;
 
 public class MoneyPanel : MonoBehaviour
 {
