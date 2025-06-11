@@ -99,6 +99,7 @@ public class DatabaseManager
                 command.CommandText = "SELECT opened, chosen FROM PlayerSkins WHERE player_id=@player AND skin_id=@skin";
                 command.Parameters.AddWithValue("@player", PlayerId);
                 command.Parameters.AddWithValue("@skin", skinId);
+
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -149,6 +150,7 @@ public class DatabaseManager
                 command.Parameters.AddWithValue("@money", money);
                 command.Parameters.AddWithValue("@level", Mathf.Max(1, level));
                 command.Parameters.AddWithValue("@player", PlayerId);
+
                 command.ExecuteNonQuery();
             }
         }

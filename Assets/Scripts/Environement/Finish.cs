@@ -10,13 +10,9 @@ public class Finish : MonoBehaviour
     [SerializeField] private FinishPanel _finishPanel;
     [SerializeField] private Collider2D _deathCollider;
     [SerializeField] private ParticleSystem _finishParticles;
-    [SerializeField] private IntersititalAd _interstitialAd;
     private Player _player;
     private void Start()
     {
-        //если вдруг забыл добавить
-        if(_interstitialAd == null)
-            _interstitialAd = FindObjectOfType<IntersititalAd>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -40,8 +36,6 @@ public class Finish : MonoBehaviour
         Time.timeScale = 0.75f;
         yield return new WaitForSeconds(.5f);
         _player.StopFollowCamera();
-        if(_interstitialAd != null)
-            _interstitialAd.ShowInterstitial();
         _finishPanel.gameObject.SetActive(true);
         _finishParticles.gameObject.SetActive(true);
         Time.timeScale = 1f;
