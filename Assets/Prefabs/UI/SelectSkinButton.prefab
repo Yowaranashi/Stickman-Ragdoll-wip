@@ -303,9 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be8b5fb4311caf4eb1337eb1757ccfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _adButton: {fileID: 2065639615472786357}
   _buyButton: {fileID: 2065639615795081825}
-  _rewardAd: {fileID: 7015168638356971868}
   _costText: {fileID: 2065639616086886528}
   _characterIcon: {fileID: 2065639615123670733}
   _closeIcon: {fileID: 2065639614982673517}
@@ -400,7 +398,6 @@ GameObject:
   - component: {fileID: 2065639615472786363}
   - component: {fileID: 2065639615472786356}
   - component: {fileID: 2065639615472786357}
-  - component: {fileID: 7015168638356971868}
   m_Layer: 5
   m_Name: AdButton
   m_TagString: Untagged
@@ -509,31 +506,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2065639615472786356}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7015168638356971868}
-        m_TargetAssemblyTypeName: RewardAd, Assembly-CSharp
-        m_MethodName: Reward
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7015168638356971868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065639615472786359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8172707037d0fd42b9bd10e6d5eead7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &2065639615795081827
 GameObject:
   m_ObjectHideFlags: 0
