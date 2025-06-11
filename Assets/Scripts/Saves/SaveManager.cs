@@ -1,141 +1,83 @@
-using InstantGamesBridge;
-using InstantGamesBridge.Modules.Storage;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    private const string OpenedState = "Open", ChosenState = "Chosen", LevelKey = "LastLevel";
+    private const string OpenedState = "Open";
+    private const string ChosenState = "Chosen";
+    private const string LevelKey = "LastLevel";
+
     public Action DataLoaded;
     public Action<int> LevelLoaded;
-    public Action<CharacterSkin> SelectedSkinLoaded;    
+    public Action<CharacterSkin> SelectedSkinLoaded;
     [SerializeField] private SkinsDatabase _database;
+
     public void ClearData()
     {
-        var keys = new List<string>();
         foreach (var item in _database.Skins)
         {
-            keys.Add(item.Key + OpenedState);
-            keys.Add(item.Key + ChosenState);
+            PlayerPrefs.DeleteKey(item.Key + OpenedState);
+            PlayerPrefs.DeleteKey(item.Key + ChosenState);
         }
-        keys.Add("Money");
-        keys.Add(LevelKey);
-        Bridge.storage.Delete(keys, null, StorageType.LocalStorage);
+        PlayerPrefs.DeleteKey("Money");
+        PlayerPrefs.DeleteKey(LevelKey);
+        PlayerPrefs.Save();
     }
+
     public void LoadData()
     {
         int openedSkins = 0;
-        var openKeys = new List<string>();
-        var chosenKeys = new List<string>();
-        foreach (var item in _database.Skins)
+        for (int i = 0; i < _database.Skins.Length; i++)
         {
-            openKeys.Add(item.Key + OpenedState);
-            chosenKeys.Add(item.Key + ChosenState);
+            var key = _database.Skins[i].Key + OpenedState;
+            bool opened = PlayerPrefs.GetInt(key, i == 0 ? 1 : 0) == 1;
+            _database.Skins[i].Opened = opened;
+            if (opened)
+                openedSkins++;
         }
-        Bridge.storage.Get(openKeys, (success, data) =>
-        {
-            if (success)
-            {
-                if (data != null)
-                {
-                    for (int i = 0; i < _database.Skins.Length; i++)
-                    {
-                        var opened = Convert.ToBoolean(data[i]);
-                        _database.Skins[i].Opened = opened;
-                        if (opened)
-                            openedSkins++;
-                    }
-                    if (openedSkins == 0)
-                    {
-                        _database.Skins[0].Opened = true;
-                        print("0 OPENED SKINS FOUND");
-                    }
-                }
-                else
-                {
-                    print("OPEN DATA FUCK");
-                }
-            }
-        }, StorageType.LocalStorage);
 
-        Bridge.storage.Get(chosenKeys, (success, data) =>
+        for (int i = 0; i < _database.Skins.Length; i++)
         {
-            if (success)
-            {
-                if (data != null)
-                {
-                    for (int i = 0; i < _database.Skins.Length; i++)
-                    {
-                        _database.Skins[i].Chosen = Convert.ToBoolean(data[i]);
-                    }
-                    if(openedSkins== 0)
-                        _database.Skins[0].Chosen = true;
-                    SelectedSkinLoaded?.Invoke(_database.GetChosenSkin());
-                }
-                else
-                {
-                    print("CHOSE DATA FUCK");
-                }
-            }
-        }, StorageType.LocalStorage);
+            var key = _database.Skins[i].Key + ChosenState;
+            bool chosen = PlayerPrefs.GetInt(key, i == 0 ? 1 : 0) == 1;
+            _database.Skins[i].Chosen = chosen;
+        }
 
-        Bridge.storage.Get("Money", (success, data) =>
-        {
-            if (data != null)
-            {
-                print($"MONEY DATA {data}");
-                _database.Money = Convert.ToInt32(data);
-                DataLoaded?.Invoke();
-            }
-            else
-            {
-                print("MONEY DATA NOT SET");
-            }
-        }, StorageType.LocalStorage);
+        if (openedSkins == 0)
+            _database.Skins[0].Opened = true;
+
+        SelectedSkinLoaded?.Invoke(_database.GetChosenSkin());
+
+        _database.Money = PlayerPrefs.GetInt("Money", _database.Money);
+        DataLoaded?.Invoke();
     }
+
     public void SaveMoney()
     {
-        Bridge.storage.Set("Money", _database.Money, null, StorageType.LocalStorage);
+        PlayerPrefs.SetInt("Money", _database.Money);
+        PlayerPrefs.Save();
     }
+
     public void SaveLevel(int level)
     {
-        Bridge.storage.Set(LevelKey, level, null, StorageType.LocalStorage);
+        PlayerPrefs.SetInt(LevelKey, level);
+        PlayerPrefs.Save();
     }
+
     public int LoadLevel()
     {
-        int level = 1;
-        Bridge.storage.Get(LevelKey, (success, data) =>
-        {
-            if (data != null)
-            {
-                print($"LEVEL DATA {data}");
-                level = Convert.ToInt32(data);
-                LevelLoaded?.Invoke(Convert.ToInt32(data));
-            }
-            else
-            {
-                LevelLoaded?.Invoke(1);
-                print("LEVEL DATA NOT SET");
-            }
-        }, StorageType.LocalStorage);
-        //LevelLoaded?.Invoke(level);
+        int level = PlayerPrefs.GetInt(LevelKey, 1);
+        LevelLoaded?.Invoke(level);
         return level;
     }
+
     public void SaveSkinsState()
     {
-        var openKeys = new List<string>();
-        var openValues = new List<object>();
-        var chosenKeys = new List<string>();
-        var chosenValues = new List<object>();
-        foreach (var item in _database.Skins)
+        for (int i = 0; i < _database.Skins.Length; i++)
         {
-            openKeys.Add(item.Key + OpenedState);
-            openValues.Add(item.Opened);
-            chosenKeys.Add(item.Key + ChosenState);
-            chosenValues.Add(item.Chosen);
+            PlayerPrefs.SetInt(_database.Skins[i].Key + OpenedState, _database.Skins[i].Opened ? 1 : 0);
+            PlayerPrefs.SetInt(_database.Skins[i].Key + ChosenState, _database.Skins[i].Chosen ? 1 : 0);
         }
-        Bridge.storage.Set(openKeys, openValues, null, StorageType.LocalStorage);
-        Bridge.storage.Set(chosenKeys, chosenValues, null, StorageType.LocalStorage);
+        PlayerPrefs.Save();
     }
 }

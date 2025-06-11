@@ -4,8 +4,7 @@ using TMPro;
 
 public class SelectSkinButton : MonoBehaviour
 {
-    [SerializeField] private Button _adButton, _buyButton;
-    [SerializeField] private RewardAd _rewardAd;
+    [SerializeField] private Button _buyButton;
     [SerializeField] private TextMeshProUGUI _costText;
     [SerializeField] private Image _characterIcon, _closeIcon, _selectIcon;
     [SerializeField] private Sprite _chosenLayout, _notChosenLayout;
@@ -14,27 +13,18 @@ public class SelectSkinButton : MonoBehaviour
     private CharacterSkin _skin;
     private void OnDisable()
     {
-        _rewardAd.RewardGet -= OpenSkinForAd;
     }
     public void Init(CharacterSkin skin, Shop shopPanel)
     {
         _shop = shopPanel;
         _skin = skin;
-        _rewardAd.RewardGet += OpenSkinForAd;
         _backgroundImage = GetComponent<Image>();
         _characterIcon.sprite = skin.Head;
         if (!_skin.Opened)
         {
             _closeIcon.gameObject.SetActive(true);
-            if (_skin.OpenForAd)
-            {
-                _adButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                _buyButton.gameObject.SetActive(true);
-                _costText.text = _skin.Cost.ToString();
-            }
+            _buyButton.gameObject.SetActive(true);
+            _costText.text = _skin.Cost.ToString();
             return;
         }
         if(_skin.Opened && _skin.Chosen)
@@ -52,7 +42,6 @@ public class SelectSkinButton : MonoBehaviour
         if (!_shop.CanBuySkin(_skin.Cost)) return;
         _skin.Opened = true;
         _closeIcon.gameObject.SetActive(false);
-        _adButton.gameObject.SetActive(false);  
         _buyButton.gameObject.SetActive(false);
         _shop.Save();
     }
@@ -74,16 +63,5 @@ public class SelectSkinButton : MonoBehaviour
         _backgroundImage.sprite = _notChosenLayout;
         _selectIcon.gameObject.SetActive(false);
     }
-    private void OpenSkinForAd(bool opened)
-    {
-        if(opened)
-        {
-            print("SKIN OPENED");
-        }
-        _skin.Opened = true;
-        _closeIcon.gameObject.SetActive(false);
-        _adButton.gameObject.SetActive(false);
-        _buyButton.gameObject.SetActive(false);
-        _shop.Save();
-    }
+    
 }

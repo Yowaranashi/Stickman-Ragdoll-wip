@@ -8,18 +8,9 @@ public class FinishPanel : MonoBehaviour
 {
     [SerializeField] private SkinsDatabase _database;
     [SerializeField] private Button _rewardButton;
-    [SerializeField] private RewardAd _reward;
     [SerializeField] private TextMeshProUGUI _rewardText;
     [SerializeField] private SaveManager _saveManager;
-    private void OnEnable()
-    {
-        _reward.RewardGet += GetReward;
-    }
-    private void OnDisable()
-    {
-        _reward.RewardGet -= GetReward; 
-    }
-    private void GetReward(bool reward)
+    public void GetReward()
     {
         print("REWARD GET");
         _rewardButton.enabled = false;
