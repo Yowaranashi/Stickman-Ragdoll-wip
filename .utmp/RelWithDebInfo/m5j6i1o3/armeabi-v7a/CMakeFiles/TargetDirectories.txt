@@ -1,0 +1,5 @@
+C:/Users/Notebook/Documents/GitHub/StickmanRagdoll-main/.utmp/RelWithDebInfo/m5j6i1o3/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Notebook/Documents/GitHub/StickmanRagdoll-main/.utmp/RelWithDebInfo/m5j6i1o3/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Users/Notebook/Documents/GitHub/StickmanRagdoll-main/.utmp/RelWithDebInfo/m5j6i1o3/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/Notebook/Documents/GitHub/StickmanRagdoll-main/.utmp/RelWithDebInfo/m5j6i1o3/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/Notebook/Documents/GitHub/StickmanRagdoll-main/.utmp/RelWithDebInfo/m5j6i1o3/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
