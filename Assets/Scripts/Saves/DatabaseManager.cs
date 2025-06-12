@@ -8,6 +8,7 @@ public class DatabaseManager : MonoBehaviour
 {
     public static DatabaseManager Instance { get; private set; }
     public int CurrentUserId { get; private set; }
+    public string CurrentUsername { get; private set; }
 
     private string _dbPath;
 
@@ -66,6 +67,7 @@ public class DatabaseManager : MonoBehaviour
                     command.Parameters.Add(new SqliteParameter("@id", id));
                     command.ExecuteNonQuery();
                     CurrentUserId = (int)id;
+                    CurrentUsername = username;
                     return true;
                 }
             }
@@ -91,6 +93,7 @@ public class DatabaseManager : MonoBehaviour
                 if (reader.Read())
                 {
                     CurrentUserId = reader.GetInt32(0);
+                    CurrentUsername = username;
                     return true;
                 }
             }

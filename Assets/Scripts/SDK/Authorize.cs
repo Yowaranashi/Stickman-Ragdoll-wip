@@ -30,9 +30,19 @@ namespace SDK
             if (_authorizationPanel != null)
                 _authorizationPanel.SetActive(true);
             if (_playerNameText != null)
-                _playerNameText.text = "Player";
+            {
+                if (DatabaseManager.Instance != null && !string.IsNullOrEmpty(DatabaseManager.Instance.CurrentUsername))
+                    _playerNameText.text = DatabaseManager.Instance.CurrentUsername;
+                else
+                    _playerNameText.text = "Player";
+            }
             if (_playerIdText != null)
-                _playerIdText.text = "0";
+            {
+                if (DatabaseManager.Instance != null)
+                    _playerIdText.text = DatabaseManager.Instance.CurrentUserId.ToString();
+                else
+                    _playerIdText.text = "0";
+            }
             if (_authorizationButton != null)
                 _authorizationButton.interactable = false;
         }
