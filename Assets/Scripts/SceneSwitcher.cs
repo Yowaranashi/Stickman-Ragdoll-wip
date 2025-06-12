@@ -15,7 +15,15 @@ public class SceneSwitcher : MonoBehaviour
     }
     public void Open(int level)
     {
-        SceneManager.LoadScene(level);
+        string sceneName = $"Level {level}";
+        if (Application.CanStreamedLevelBeLoaded(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(level);
+        }
     }
     public void SwitchToNext()
     {

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChooseLevelButton : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class ChooseLevelButton : MonoBehaviour
         _btnText = GetComponentInChildren<TextMeshProUGUI>();
         _btnText.text = levelId.ToString();
         var btn = GetComponent<Button>();
-        if (levelId > lastLevelIndex)
+
+        int buildIndex = SceneUtility.GetBuildIndexByScenePath($"Assets/Scenes/Level {levelId}.unity");
+        if (buildIndex == -1 || buildIndex > lastLevelIndex)
         {
             btn.enabled = false;
             GetComponent<Image>().sprite = _notOpenLayout;
         }
+
         btn.onClick.AddListener(delegate
         {
             switcher.Open(levelId);
