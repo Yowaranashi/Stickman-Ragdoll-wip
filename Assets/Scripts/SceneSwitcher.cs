@@ -7,7 +7,7 @@ public class SceneSwitcher : MonoBehaviour
     public int LastLevel;
     public void ToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     public void Restart()
     {
