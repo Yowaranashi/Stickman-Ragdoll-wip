@@ -1,24 +1,28 @@
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChooseLevelButton : MonoBehaviour
 {
-    private TextMeshProUGUI _btnText;
     [SerializeField] private Sprite _notOpenLayout;
-    public void InitButton(int levelId, SceneSwitcher switcher, int lastLevelIndex)
+
+    public void InitButton(int levelId, int buildIndex, SceneSwitcher switcher, int lastLevelIndex)
     {
-        _btnText = GetComponentInChildren<TextMeshProUGUI>();
-        _btnText.text = levelId.ToString();
+        var txt = GetComponentInChildren<TextMeshProUGUI>();
+        txt.text = levelId.ToString();
+
         var btn = GetComponent<Button>();
+        var img = GetComponent<Image>();
+
         if (levelId > lastLevelIndex)
         {
-            btn.enabled = false;
-            GetComponent<Image>().sprite = _notOpenLayout;
+            btn.interactable = false;
+            btn.onClick.RemoveAllListeners();
+            img.sprite = _notOpenLayout;
         }
-        btn.onClick.AddListener(delegate
+        else
         {
-            switcher.Open(levelId);
-        });
+            btn.onClick.AddListener(() => switcher.Open(buildIndex));
+        }
     }
 }
